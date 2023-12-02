@@ -9,7 +9,7 @@ public class Atendimento
     DateTime inicio;
     DateTime fim;
     string? suspeitaInicial;
-    List<(Exame, string)> exames = new List<(Exame, string)>();
+    // List<(Exame, string)> exames = new List<(Exame, string)>();
     float valor;
     // Medico medicoResponsavel;
     // Paciente paciente;
