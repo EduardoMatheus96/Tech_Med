@@ -63,4 +63,33 @@ public class Atendimento
         get { return diagnosticoFinal!; }
         set { diagnosticoFinal = value; }
     }
+
+    public void iniciarAtendimento(string suspeita)
+    {
+        Inicio = DateTime.Now;
+        SuspeitaInicial = suspeita;
+    }
+
+    public void finalizarAtendimento(string diagnostico)
+    {
+        if (Inicio < DateTime.Now)
+        {
+            Fim = DateTime.Now;
+            diagnosticoFinal = diagnostico;
+
+        }
+    }
+
+    public void ordenarDecresAtendimentoSemFinalizar(List<Atendimento> atendimentos)
+    {
+        foreach (var atendimento in atendimentos)
+        {
+            if (atendimento.Fim != default(DateTime))
+            {
+                throw new Exception("Ops, existem atendimentos finalizados na lista");
+            }
+        }
+        atendimentos.Sort((a1, a2) => a2.Inicio.CompareTo(a1.Inicio));
+    }
+
 }
