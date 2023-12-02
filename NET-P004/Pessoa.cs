@@ -1,20 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace NET_P004
-{
     public class Pessoa
     {
         private static HashSet<string> cpfsUnicos = new HashSet<string>();
         public string Nome { get; set; }
         public DateTime dataDeNascimento { get; set; }
         public string Cpf { get; set; }
-        public Person(string _nome, DateTime _dataDeNascimento, string _cpf)
+        public Pessoa(string _nome, DateTime _dataDeNascimento, string _cpf)
         {
             Nome = _nome;
             dataDeNascimento = _dataDeNascimento;
+
+           
 
             if (cpfsUnicos.Add(_cpf))
             {                       
@@ -30,7 +26,7 @@ namespace NET_P004
             }
             else
             {
-                throw new ArgumentException("CPF deve ser único.");
+                throw new ArgumentException($"CPF de {_nome} já consta cadastrado como outra pessoa !!!!");
             }
         }
         public int Idade => calculaIdade(dataDeNascimento);
@@ -53,4 +49,3 @@ namespace NET_P004
             return true;
         }
     }
-}

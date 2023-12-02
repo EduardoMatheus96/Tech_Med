@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace NET_P004
-{
     public class Paciente : Pessoa
     {
         string sexo;
@@ -32,6 +26,11 @@ namespace NET_P004
             set { this.sintomas = value; }
         }
 
+        public Paciente(string _nome, DateTime _dataDeNascimento, string _cpf, string _sexo, List<string> _sintomas) : base(_nome, _dataDeNascimento, _cpf){
+            sexo = _sexo;
+            sintomas = _sintomas;
+
+        }
         // public void adicionarPaciente(Paciente paciente, List<Paciente> pacientes){
         //     if (pacientes.Any(p => p.Cpf == paciente.Cpf))
         //     {
@@ -40,4 +39,3 @@ namespace NET_P004
         //     else pacientes.Add(paciente);
         // }
     }
-}
