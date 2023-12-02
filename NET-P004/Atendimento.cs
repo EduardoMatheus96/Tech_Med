@@ -92,4 +92,16 @@ public class Atendimento
         atendimentos.Sort((a1, a2) => a2.Inicio.CompareTo(a1.Inicio));
     }
 
+    public void relatorioAtendimento(List<Atendimento> atendimentos, string palavra)
+    {
+        List<Atendimento> resultado = atendimentos.Where(a => a.SuspeitaInicial.Contains(palavra, StringComparison.OrdinalIgnoreCase) ||
+                                             a.DiagnosticoFinal.Contains(palavra, StringComparison.OrdinalIgnoreCase))
+                                .ToList();
+
+        foreach (Atendimento atendimento in resultado)
+        {
+            Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - fim: {atendimento.Fim} - suspeita: {atendimento.SuspeitaInicial} - diagnostico final: {atendimento.DiagnosticoFinal}");
+        }
+    }
+
 }
