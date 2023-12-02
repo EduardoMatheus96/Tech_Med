@@ -8,13 +8,13 @@ namespace NET_P004
     public class Pessoa
     {
         private static HashSet<string> cpfsUnicos = new HashSet<string>();
-        public string Name { get; set; }
-        public DateTime BirthDate { get; set; }
+        public string Nome { get; set; }
+        public DateTime dataDeNascimento { get; set; }
         public string Cpf { get; set; }
-        public Person(string _name, DateTime _birthDate, string _cpf)
+        public Person(string _nome, DateTime _dataDeNascimento, string _cpf)
         {
-            Name = _name;
-            BirthDate = _birthDate;
+            Nome = _nome;
+            dataDeNascimento = _dataDeNascimento;
 
             if (cpfsUnicos.Add(_cpf))
             {                       
@@ -33,14 +33,14 @@ namespace NET_P004
                 throw new ArgumentException("CPF deve ser único.");
             }
         }
-        public int Age => calculateAge(BirthDate);
+        public int Idade => calculaIdade(dataDeNascimento);
 
-        public static int calculateAge(DateTime birthDate)
+        public static int calculaIdade(DateTime dataDeNascimento)
         {
-            int age = DateTime.Now.Year - birthDate.Year;
-            if (DateTime.Now.DayOfYear < birthDate.DayOfYear)
-                age--;
-            return age;
+            int idade = DateTime.Now.Year - dataDeNascimento.Year;
+            if (DateTime.Now.DayOfYear < dataDeNascimento.DayOfYear)
+                idade--;
+            return idade;
         }
 
         private bool ValidateCpf(string cpf)
