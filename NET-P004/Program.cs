@@ -60,4 +60,4 @@ relatorio.MostrarPacientesPorIdade(18,100);
 relatorio.MostrarPacientesPorGenero("masculino");
 relatorio.MostrarPacientesEmOrdemAlfabetica();
 relatorio.MostrarPacientesPorSintoma("febre");
-// relatorio.MostrarAniversariantesDoMes(05);
+relatorio.MostrarAniversariantesDoMes(11);

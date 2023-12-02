@@ -71,7 +71,7 @@ public class Relatorio
             .ToList();
 
         // Exibe os pacientes filtrados
-        Console.WriteLine($"\nPacientes com sintomas contendo '{textoSintoma}':");
+        Console.WriteLine($"\nRelatório 5: Pacientes com sintomas contendo '{textoSintoma}':");
         foreach (var paciente in pacientesFiltrados)
         {
             Console.WriteLine($"Nome: {paciente.Nome}, Idade: {paciente.Idade} anos, CPF: {paciente.Cpf}, Gênero: {paciente.Sexo}, Sintomas: {string.Join(", ", paciente.Sintomas)}");
@@ -88,4 +88,22 @@ public class Relatorio
         return listaSintomas.Any(sintoma => sintoma.Contains(textoSintoma, StringComparison.OrdinalIgnoreCase));
     }
 
+    public void MostrarAniversariantesDoMes(int mesAlvo)
+    {
+        var reporte6 = pacientes.Where(paciente => paciente.dataDeNascimento.Month == mesAlvo);
+        var reporte7 = medicos.Where(medico => medico.dataDeNascimento.Month == mesAlvo);
+
+        Console.WriteLine($"\nRelatório 6: Pacientes e médico que fazem aniversário em junho");
+
+        foreach (var paciente in reporte6)
+        {
+            Console.WriteLine($"Nome do paciente: {paciente.Nome} - Idade: {paciente.Idade} - CPF: {paciente.Cpf}");
+        }
+
+        foreach (var medico in reporte7)
+        {
+            Console.WriteLine($"Nome do médico: {medico.Nome} - Idade: {medico.Idade} - CPF: {medico.Cpf} - CRM: {medico.Crm}");
+        }
+
+    }
 }
