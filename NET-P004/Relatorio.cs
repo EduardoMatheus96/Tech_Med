@@ -63,4 +63,29 @@ public class Relatorio
         }
     }
 
+    public void MostrarPacientesPorSintoma(string textoSintoma)
+    {
+        // Filtra os pacientes cujos sintomas contêm o texto informado
+        var pacientesFiltrados = pacientes
+            .Where(paciente => ContemSintoma(paciente.Sintomas, textoSintoma))
+            .ToList();
+
+        // Exibe os pacientes filtrados
+        Console.WriteLine($"\nPacientes com sintomas contendo '{textoSintoma}':");
+        foreach (var paciente in pacientesFiltrados)
+        {
+            Console.WriteLine($"Nome: {paciente.Nome}, Idade: {paciente.Idade} anos, CPF: {paciente.Cpf}, Gênero: {paciente.Sexo}, Sintomas: {string.Join(", ", paciente.Sintomas)}");
+        }
+    }
+
+    // Tratar o dado dynamic
+    private bool ContemSintoma(dynamic sintomas, string textoSintoma)
+    {
+        // Convertemos para uma lista de strings (assumindo que seja uma lista de strings)
+        var listaSintomas = ((IEnumerable<object>)sintomas).Cast<string>().ToList();
+
+        // Verificamos se a lista de sintomas contém o texto informado
+        return listaSintomas.Any(sintoma => sintoma.Contains(textoSintoma, StringComparison.OrdinalIgnoreCase));
+    }
+
 }
