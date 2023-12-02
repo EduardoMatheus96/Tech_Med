@@ -9,7 +9,7 @@ public class Atendimento
     DateTime inicio;
     DateTime fim;
     string? suspeitaInicial;
-    // List<Exame> exames = new List<Exame>();
+    List<(Exame, string)> exames = new List<(Exame, string)>();
     float valor;
     // Medico medicoResponsavel;
     // Paciente paciente;
@@ -33,7 +33,7 @@ public class Atendimento
         set { suspeitaInicial = value; }
     }
 
-    // public List<Exame> Exames
+    // public List<(Exame, string)> Exames
     // {
     //     get { return exames; }
     //     set { exames = new value; }
