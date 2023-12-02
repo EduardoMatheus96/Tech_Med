@@ -1,18 +1,12 @@
 public class Atendimento
 {
-
-    public Atendimento()
-    {
-
-    }
-
     DateTime inicio;
     DateTime fim;
     string? suspeitaInicial;
-    // List<(Exame, string)> exames = new List<(Exame, string)>();
+    List<(Exame, string)> exames = new List<(Exame, string)>();
     float valor;
-    // Medico medicoResponsavel;
-    // Paciente paciente;
+    Medico? medicoResponsavel;
+    Paciente? paciente;
     string? diagnosticoFinal;
 
     public DateTime Inicio
@@ -33,11 +27,18 @@ public class Atendimento
         set { suspeitaInicial = value; }
     }
 
-    // public List<(Exame, string)> Exames
-    // {
-    //     get { return exames; }
-    //     set { exames = new value; }
-    // }
+    public List<(Exame, string)> Exames
+    {
+        get { return exames; }
+        set
+        {
+            foreach (var exame in value)
+            {
+                exames.Add(exame);
+            }
+
+        }
+    }
 
     public float Valor
     {
@@ -45,24 +46,21 @@ public class Atendimento
         set { valor = value; }
     }
 
-    // public Medico MedicoResponsavel
-    // {
-    //     get { return medicoResponsavel; }
-    //     set { medicoResponsavel = value; }
-    // }
+    public Medico MedicoResponsavel
+    {
+        get { return medicoResponsavel!; }
+        set { medicoResponsavel = value; }
+    }
 
-    // public Paciente Paciente
-    // {
-    //     get { return paciente; }
-    //     set { paciente = value; }
-    // }
+    public Paciente Paciente
+    {
+        get { return paciente!; }
+        set { paciente = value; }
+    }
 
     public string DiagnosticoFinal
     {
         get { return diagnosticoFinal!; }
         set { diagnosticoFinal = value; }
     }
-
-
-
 }
