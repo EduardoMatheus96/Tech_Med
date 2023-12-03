@@ -230,25 +230,59 @@ public class Relatorio
         }
     }
 
-    public static void relatorioAtendimento(List<Atendimento> atendimentos, string palavra)
+    public static void relatorioAtendimentoComPalavra(List<Atendimento> atendimentos, string palavra)
     {
-        List<Atendimento> resultado = atendimentos.Where(a => a.SuspeitaInicial.Contains(palavra, StringComparison.OrdinalIgnoreCase) ||
-                                             a.DiagnosticoFinal.Contains(palavra, StringComparison.OrdinalIgnoreCase))
-                                .ToList();
-
-        foreach (Atendimento atendimento in resultado)
+        try
         {
-            Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - fim: {atendimento.Fim} - suspeita: {atendimento.SuspeitaInicial} - diagnostico final: {atendimento.DiagnosticoFinal}");
+            if (atendimentos.Any())
+            {
+                List<Atendimento> resultado = atendimentos.Where(a => a.SuspeitaInicial.Contains(palavra, StringComparison.OrdinalIgnoreCase) ||
+                                                     a.DiagnosticoFinal.Contains(palavra, StringComparison.OrdinalIgnoreCase))
+                                        .ToList();
+                if (resultado.Any())
+                {
+                    Console.WriteLine($"\n=== Atendimentos com sintomas ou diagnósticos contendo '{palavra}': ===\n");
+                    foreach (Atendimento atendimento in resultado)
+                    {
+                        Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - fim: {atendimento.Fim} - suspeita: {atendimento.SuspeitaInicial} - diagnostico final: {atendimento.DiagnosticoFinal}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum atendimento com sintoma ou diagnóstico contendo a palavra '{palavra}' encontrado!");
+                }
+            }
+            else
+            {
+                throw new Exception($"Nenhum atendimento encontrado!");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
     public static void ordenarDecresAtendimentoSemFinalizar(List<Atendimento> atendimentos)
     {
-        List<Atendimento> atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime)).ToList();
         try
         {
-            if (atendimentosSemFinalizar.Count > 0)
+            if (atendimentos.Any())
             {
-                atendimentosSemFinalizar.Sort((a1, a2) => a2.Inicio.CompareTo(a1.Inicio));
+
+                List<Atendimento> atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime)).ToList();
+                if (atendimentosSemFinalizar.Count > 0)
+                {
+                    Console.WriteLine($"\n=== Atendimentos sem finalizar em ordem decrescente: ===\n");
+                    var resultado = atendimentosSemFinalizar.Sort((a1, a2) => a2.Inicio.CompareTo(a1.Inicio));
+                    foreach (Atendimento atendimento in resultado)
+                    {
+                        Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - suspeita: {atendimento.SuspeitaInicial}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum atendimento sem finalizar encontrado!");
+                }
             }
             else
             {
@@ -265,33 +299,47 @@ public class Relatorio
     {
         try
         {
-            var medicosComMaisAtendimentos = atendimentos
-                .Where(atendimento => atendimento.Fim != DateTime.MinValue)
-                .GroupBy(atendimento => atendimento.MedicoResponsavel)
-                .OrderByDescending(group => group.Count())
-                .Select(group => new { Medico = group.Key, NumeroDeAtendimentos = group.Count() });
-
-            if (medicosComMaisAtendimentos.Any())
+            if (atendimentos.Any())
             {
-                var medicosComAtendimentosConcluidos = medicosComMaisAtendimentos
-                    .Join(
-                        medicos,
-                        mca => mca.Medico,
-                        medico => medico,
-                        (mca, medico) => new { Medico = medico, NumeroDeAtendimentos = mca.NumeroDeAtendimentos }
-                    )
-                    .ToList();
-
-                Console.WriteLine("\n=== Médicos em ordem decrescente da quantidade de atendimentos concluídos: ===\n");
-
-                foreach (var medicoComAtendimentos in medicosComAtendimentosConcluidos)
+                if (medicos.Any())
                 {
-                    Console.WriteLine($"Nome do médico: {medicoComAtendimentos.Medico.Nome} - Atendimentos Concluídos: {medicoComAtendimentos.NumeroDeAtendimentos}");
+                    var medicosComMaisAtendimentos = atendimentos
+                        .Where(atendimento => atendimento.Fim != DateTime.MinValue)
+                        .GroupBy(atendimento => atendimento.MedicoResponsavel)
+                        .OrderByDescending(group => group.Count())
+                        .Select(group => new { Medico = group.Key, NumeroDeAtendimentos = group.Count() });
+
+                    if (medicosComMaisAtendimentos.Any())
+                    {
+                        var medicosComAtendimentosConcluidos = medicosComMaisAtendimentos
+                            .Join(
+                                medicos,
+                                mca => mca.Medico,
+                                medico => medico,
+                                (mca, medico) => new { Medico = medico, NumeroDeAtendimentos = mca.NumeroDeAtendimentos }
+                            )
+                            .ToList();
+
+                        Console.WriteLine("\n=== Médicos em ordem decrescente da quantidade de atendimentos concluídos: ===\n");
+
+                        foreach (var medicoComAtendimentos in medicosComAtendimentosConcluidos)
+                        {
+                            Console.WriteLine($"Nome do médico: {medicoComAtendimentos.Medico.Nome} - Atendimentos Concluídos: {medicoComAtendimentos.NumeroDeAtendimentos}");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Nenhum medico com atendimentos concluídos encontrado!");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum medico encontrado!");
                 }
             }
             else
             {
-                Console.WriteLine("Não existem atendimentos concluídos!");
+                throw new Exception("Não existem atendimentos concluídos!");
             }
         }
         catch (Exception ex)
