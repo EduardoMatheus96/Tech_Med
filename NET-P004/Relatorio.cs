@@ -252,5 +252,30 @@ public class Relatorio
                 Console.WriteLine("Não existem atendimentos sem finalizar!")
             }
         }
-    }   
+    }
+
+    public static void OrdenarMedicosDecresAtendimentoConcluido(List<Medico> medicos){
+    try
+    {
+        if (medicos.Any())
+        {
+            var medicosOrdenados = medicos.OrderByDescending(medico => medico.AtendimentosConcluidos).ToList();
+
+            Console.WriteLine("\n=== Médicos em ordem decrescente da quantidade de atendimentos concluídos: ===\n");
+
+            foreach (var medico in medicosOrdenados)
+            {
+                Console.WriteLine($"Nome do médico: {medico.Nome} - Atendimentos Concluídos: {medico.AtendimentosConcluidos}");
+            }
+        }
+        else
+        {
+            throw new Exception("Nenhum médico encontrado!");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+  }   
 }
