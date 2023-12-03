@@ -238,4 +238,16 @@ public class Relatorio
             Console.WriteLine(ex.Message);
         }
     }
+
+    public void relatorioAtendimento(List<Atendimento> atendimentos, string palavra)
+    {
+        List<Atendimento> resultado = atendimentos.Where(a => a.SuspeitaInicial.Contains(palavra, StringComparison.OrdinalIgnoreCase) ||
+                                             a.DiagnosticoFinal.Contains(palavra, StringComparison.OrdinalIgnoreCase))
+                                .ToList();
+
+        foreach (Atendimento atendimento in resultado)
+        {
+            Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - fim: {atendimento.Fim} - suspeita: {atendimento.SuspeitaInicial} - diagnostico final: {atendimento.DiagnosticoFinal}");
+        }
+    }
 }
