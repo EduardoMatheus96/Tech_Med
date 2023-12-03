@@ -299,33 +299,47 @@ public class Relatorio
     {
         try
         {
-            var medicosComMaisAtendimentos = atendimentos
-                .Where(atendimento => atendimento.Fim != DateTime.MinValue)
-                .GroupBy(atendimento => atendimento.MedicoResponsavel)
-                .OrderByDescending(group => group.Count())
-                .Select(group => new { Medico = group.Key, NumeroDeAtendimentos = group.Count() });
-
-            if (medicosComMaisAtendimentos.Any())
+            if (atendimentos.Any())
             {
-                var medicosComAtendimentosConcluidos = medicosComMaisAtendimentos
-                    .Join(
-                        medicos,
-                        mca => mca.Medico,
-                        medico => medico,
-                        (mca, medico) => new { Medico = medico, NumeroDeAtendimentos = mca.NumeroDeAtendimentos }
-                    )
-                    .ToList();
-
-                Console.WriteLine("\n=== Médicos em ordem decrescente da quantidade de atendimentos concluídos: ===\n");
-
-                foreach (var medicoComAtendimentos in medicosComAtendimentosConcluidos)
+                if (medicos.Any())
                 {
-                    Console.WriteLine($"Nome do médico: {medicoComAtendimentos.Medico.Nome} - Atendimentos Concluídos: {medicoComAtendimentos.NumeroDeAtendimentos}");
+                    var medicosComMaisAtendimentos = atendimentos
+                        .Where(atendimento => atendimento.Fim != DateTime.MinValue)
+                        .GroupBy(atendimento => atendimento.MedicoResponsavel)
+                        .OrderByDescending(group => group.Count())
+                        .Select(group => new { Medico = group.Key, NumeroDeAtendimentos = group.Count() });
+
+                    if (medicosComMaisAtendimentos.Any())
+                    {
+                        var medicosComAtendimentosConcluidos = medicosComMaisAtendimentos
+                            .Join(
+                                medicos,
+                                mca => mca.Medico,
+                                medico => medico,
+                                (mca, medico) => new { Medico = medico, NumeroDeAtendimentos = mca.NumeroDeAtendimentos }
+                            )
+                            .ToList();
+
+                        Console.WriteLine("\n=== Médicos em ordem decrescente da quantidade de atendimentos concluídos: ===\n");
+
+                        foreach (var medicoComAtendimentos in medicosComAtendimentosConcluidos)
+                        {
+                            Console.WriteLine($"Nome do médico: {medicoComAtendimentos.Medico.Nome} - Atendimentos Concluídos: {medicoComAtendimentos.NumeroDeAtendimentos}");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Nenhum medico com atendimentos concluídos encontrado!");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum medico encontrado!");
                 }
             }
             else
             {
-                Console.WriteLine("Não existem atendimentos concluídos!");
+                throw new Exception("Não existem atendimentos concluídos!");
             }
         }
         catch (Exception ex)
