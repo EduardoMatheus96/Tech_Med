@@ -161,7 +161,7 @@ public class Relatorio
         }
     }
 
-    private bool ContemSintoma(dynamic sintomas, string textoSintoma)
+    private static bool ContemSintoma(dynamic sintomas, string textoSintoma)
     {
         var listaSintomas = ((IEnumerable<object>)sintomas).Cast<string>().ToList();
 
@@ -241,16 +241,63 @@ public class Relatorio
             Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - fim: {atendimento.Fim} - suspeita: {atendimento.SuspeitaInicial} - diagnostico final: {atendimento.DiagnosticoFinal}");
         }
     }
-
     public static void ordenarDecresAtendimentoSemFinalizar(List<Atendimento> atendimentos)
     {
-        var atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime));
-        try {
-            if(atendimentosSemFinalizar.Count > 0) {
+        List<Atendimento> atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime)).ToList();
+        try
+        {
+            if (atendimentosSemFinalizar.Count > 0)
+            {
                 atendimentosSemFinalizar.Sort((a1, a2) => a2.Inicio.CompareTo(a1.Inicio));
-            } else {
-                Console.WriteLine("Não existem atendimentos sem finalizar!")
+            }
+            else
+            {
+                throw new Exception($"Nenhum atendimento encontrado!");
             }
         }
-    }   
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    public static void OrdenarMedicosDecresAtendimentoConcluido(List<Atendimento> atendimentos, List<Medico> medicos)
+    {
+        try
+        {
+            var medicosComMaisAtendimentos = atendimentos
+                .Where(atendimento => atendimento.Fim != DateTime.MinValue)
+                .GroupBy(atendimento => atendimento.MedicoResponsavel)
+                .OrderByDescending(group => group.Count())
+                .Select(group => new { Medico = group.Key, NumeroDeAtendimentos = group.Count() });
+
+            if (medicosComMaisAtendimentos.Any())
+            {
+                var medicosComAtendimentosConcluidos = medicosComMaisAtendimentos
+                    .Join(
+                        medicos,
+                        mca => mca.Medico,
+                        medico => medico,
+                        (mca, medico) => new { Medico = medico, NumeroDeAtendimentos = mca.NumeroDeAtendimentos }
+                    )
+                    .ToList();
+
+                Console.WriteLine("\n=== Médicos em ordem decrescente da quantidade de atendimentos concluídos: ===\n");
+
+                foreach (var medicoComAtendimentos in medicosComAtendimentosConcluidos)
+                {
+                    Console.WriteLine($"Nome do médico: {medicoComAtendimentos.Medico.Nome} - Atendimentos Concluídos: {medicoComAtendimentos.NumeroDeAtendimentos}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Não existem atendimentos concluídos!");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
 }
+
