@@ -182,6 +182,5 @@ public class Relatorio
         {
             throw new Exception($"Nenhum medico encontrado!");
         }
-
     }
 }
