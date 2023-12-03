@@ -230,25 +230,59 @@ public class Relatorio
         }
     }
 
-    public static void relatorioAtendimento(List<Atendimento> atendimentos, string palavra)
+    public static void relatorioAtendimentoComPalavra(List<Atendimento> atendimentos, string palavra)
     {
-        List<Atendimento> resultado = atendimentos.Where(a => a.SuspeitaInicial.Contains(palavra, StringComparison.OrdinalIgnoreCase) ||
-                                             a.DiagnosticoFinal.Contains(palavra, StringComparison.OrdinalIgnoreCase))
-                                .ToList();
-
-        foreach (Atendimento atendimento in resultado)
+        try
         {
-            Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - fim: {atendimento.Fim} - suspeita: {atendimento.SuspeitaInicial} - diagnostico final: {atendimento.DiagnosticoFinal}");
+            if (atendimentos.Any())
+            {
+                List<Atendimento> resultado = atendimentos.Where(a => a.SuspeitaInicial.Contains(palavra, StringComparison.OrdinalIgnoreCase) ||
+                                                     a.DiagnosticoFinal.Contains(palavra, StringComparison.OrdinalIgnoreCase))
+                                        .ToList();
+                if (resultado.Any())
+                {
+                    Console.WriteLine($"\n=== Atendimentos com sintomas ou diagnósticos contendo '{palavra}': ===\n");
+                    foreach (Atendimento atendimento in resultado)
+                    {
+                        Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - fim: {atendimento.Fim} - suspeita: {atendimento.SuspeitaInicial} - diagnostico final: {atendimento.DiagnosticoFinal}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum atendimento com sintoma ou diagnóstico contendo a palavra '{palavra}' encontrado!");
+                }
+            }
+            else
+            {
+                throw new Exception($"Nenhum atendimento encontrado!");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
     public static void ordenarDecresAtendimentoSemFinalizar(List<Atendimento> atendimentos)
     {
-        List<Atendimento> atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime)).ToList();
         try
         {
-            if (atendimentosSemFinalizar.Count > 0)
+            if (atendimentos.Any())
             {
-                atendimentosSemFinalizar.Sort((a1, a2) => a2.Inicio.CompareTo(a1.Inicio));
+
+                List<Atendimento> atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime)).ToList();
+                if (atendimentosSemFinalizar.Count > 0)
+                {
+                    Console.WriteLine($"\n=== Atendimentos sem finalizar em ordem decrescente: ===\n");
+                    var resultado = atendimentosSemFinalizar.Sort((a1, a2) => a2.Inicio.CompareTo(a1.Inicio));
+                    foreach (Atendimento atendimento in resultado)
+                    {
+                        Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - suspeita: {atendimento.SuspeitaInicial}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum atendimento sem finalizar encontrado!");
+                }
             }
             else
             {
