@@ -11,123 +11,162 @@ public class Relatorio
 
     public void mostrarMedicosPorIdade(int idadeMinima, int idadeMaxima)
     {
-        if (medicos.Any())
+        try
         {
-            var reporte1 = medicos.Where(medico => medico.Idade >= idadeMinima && medico.Idade <= idadeMaxima);
-            if (reporte1.Any())
+            if (medicos.Any())
             {
-                Console.WriteLine($"\n=== Médicos com idade entre {idadeMinima} e {idadeMaxima} anos: ===\n");
-
-                foreach (var medico in reporte1)
+                var reporte1 = medicos.Where(medico => medico.Idade >= idadeMinima && medico.Idade <= idadeMaxima);
+                if (reporte1.Any())
                 {
-                    Console.WriteLine($"Nome do médico: {medico.Nome} - Idade: {medico.Idade} - CPF: {medico.Cpf} - CRM: {medico.Crm}");
+                    Console.WriteLine($"\n=== Médicos com idade entre {idadeMinima} e {idadeMaxima} anos: ===\n");
+
+                    foreach (var medico in reporte1)
+                    {
+                        Console.WriteLine($"Nome do médico: {medico.Nome} - Idade: {medico.Idade} - CPF: {medico.Cpf} - CRM: {medico.Crm}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum medico entre as idades {idadeMinima} e {idadeMaxima}!");
                 }
             }
             else
             {
-                throw new Exception($"Nenhum medico entre as idades {idadeMinima} e {idadeMaxima}!");
+                throw new Exception("Nenhum medico encontrado!");
             }
         }
-        else
+        catch (Exception ex)
         {
-            throw new Exception("Nenhum medico encontrado!");
+            Console.WriteLine(ex.Message);
         }
     }
 
     public void MostrarPacientesPorIdade(int idadeMinima, int idadeMaxima)
     {
-        if (pacientes.Any())
+        try
         {
-            var reporte2 = pacientes.Where(paciente => paciente.Idade >= idadeMinima && paciente.Idade <= idadeMaxima);
-            if (reporte2.Any())
-            {
-                Console.WriteLine($"\n=== Pacientes com idade entre {idadeMinima} e {idadeMaxima} anos: ===\n");
 
-                foreach (var paciente in reporte2)
+            if (pacientes.Any())
+            {
+                var reporte2 = pacientes.Where(paciente => paciente.Idade >= idadeMinima && paciente.Idade <= idadeMaxima);
+                if (reporte2.Any())
                 {
-                    Console.WriteLine($"Nome do paciente: {paciente.Nome} - Idade: {paciente.Idade} - CPF: {paciente.Cpf}");
-                    Console.WriteLine($"Sintomas:\n{string.Join(", ", paciente.Sintomas)}");
+                    Console.WriteLine($"\n=== Pacientes com idade entre {idadeMinima} e {idadeMaxima} anos: ===\n");
+
+                    foreach (var paciente in reporte2)
+                    {
+                        Console.WriteLine($"Nome do paciente: {paciente.Nome} - Idade: {paciente.Idade} - CPF: {paciente.Cpf}");
+                        Console.WriteLine($"Sintomas:\n{string.Join(", ", paciente.Sintomas)}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum paciente entre as idades {idadeMinima} e {idadeMaxima}!");
                 }
             }
             else
             {
-                throw new Exception($"Nenhum paciente entre as idades {idadeMinima} e {idadeMaxima}!");
+                throw new Exception("Nenhum paciente encontrado!");
             }
         }
-        else
+        catch (Exception ex)
         {
-            throw new Exception("Nenhum paciente encontrado!");
+            Console.WriteLine(ex.Message);
         }
     }
 
     public void MostrarPacientesPorGenero(string sexoAlvo)
     {
-        if (pacientes.Any())
+        try
         {
-            var pacientesFiltrados = pacientes.Where(paciente =>
-                paciente.Sexo.Equals(sexoAlvo, StringComparison.OrdinalIgnoreCase))
-                .ToList();
 
-            if (pacientesFiltrados.Any())
+            if (pacientes.Any())
             {
-                Console.WriteLine($"\n=== Pacientes do sexo {sexoAlvo}: ===\n");
-                foreach (var paciente in pacientesFiltrados)
+                var pacientesFiltrados = pacientes.Where(paciente =>
+                    paciente.Sexo.Equals(sexoAlvo, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+
+                if (pacientesFiltrados.Any())
                 {
-                    Console.WriteLine($"Nome: {paciente.Nome}, Idade: {paciente.Idade} anos, CPF: {paciente.Cpf}, Sexo: {paciente.Sexo}");
+                    Console.WriteLine($"\n=== Pacientes do sexo {sexoAlvo}: ===\n");
+                    foreach (var paciente in pacientesFiltrados)
+                    {
+                        Console.WriteLine($"Nome: {paciente.Nome}, Idade: {paciente.Idade} anos, CPF: {paciente.Cpf}, Sexo: {paciente.Sexo}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum paciente do sexo {sexoAlvo} encontrado!");
                 }
             }
             else
             {
-                throw new Exception($"Nenhum paciente do sexo {sexoAlvo} encontrado!");
+                throw new Exception("Nenhum paciente encontrado!");
             }
         }
-        else
+        catch (Exception ex)
         {
-            throw new Exception("Nenhum paciente encontrado!");
+            Console.WriteLine(ex.Message);
         }
     }
 
     public void MostrarPacientesEmOrdemAlfabetica()
     {
-        if (pacientes.Any())
+        try
         {
-            var pacientesOrdenados = pacientes.OrderBy(paciente => paciente.Nome).ToList();
 
-            Console.WriteLine("\n=== Pacientes em ordem alfabética: ===\n");
-            foreach (var paciente in pacientesOrdenados)
+            if (pacientes.Any())
             {
-                Console.WriteLine($"Nome: {paciente.Nome}, Idade: {paciente.Idade} anos, CPF: {paciente.Cpf}, Gênero: {paciente.Sexo}");
+                var pacientesOrdenados = pacientes.OrderBy(paciente => paciente.Nome).ToList();
+
+                Console.WriteLine("\n=== Pacientes em ordem alfabética: ===\n");
+                foreach (var paciente in pacientesOrdenados)
+                {
+                    Console.WriteLine($"Nome: {paciente.Nome}, Idade: {paciente.Idade} anos, CPF: {paciente.Cpf}, Gênero: {paciente.Sexo}");
+                }
+            }
+            else
+            {
+                throw new Exception("Nenhum paciente encontrado!");
             }
         }
-        else
+        catch (Exception ex)
         {
-            throw new Exception("Nenhum paciente encontrado!");
+            Console.WriteLine(ex.Message);
         }
     }
 
     public void MostrarPacientesPorSintoma(string textoSintoma)
     {
-        if (pacientes.Any())
+        try
         {
-            var pacientesFiltrados = pacientes
-                .Where(paciente => ContemSintoma(paciente.Sintomas, textoSintoma))
-                .ToList();
-            if (pacientesFiltrados.Any())
+
+            if (pacientes.Any())
             {
-                Console.WriteLine($"\n=== Pacientes com sintomas contendo '{textoSintoma}': ===\n");
-                foreach (var paciente in pacientesFiltrados)
+                var pacientesFiltrados = pacientes
+                    .Where(paciente => ContemSintoma(paciente.Sintomas, textoSintoma))
+                    .ToList();
+                if (pacientesFiltrados.Any())
                 {
-                    Console.WriteLine($"Nome: {paciente.Nome}, Idade: {paciente.Idade} anos, CPF: {paciente.Cpf}, Gênero: {paciente.Sexo}, Sintomas: {string.Join(", ", paciente.Sintomas)}");
+                    Console.WriteLine($"\n=== Pacientes com sintomas contendo '{textoSintoma}': ===\n");
+                    foreach (var paciente in pacientesFiltrados)
+                    {
+                        Console.WriteLine($"Nome: {paciente.Nome}, Idade: {paciente.Idade} anos, CPF: {paciente.Cpf}, Gênero: {paciente.Sexo}, Sintomas: {string.Join(", ", paciente.Sintomas)}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum paciente com sintomas '{textoSintoma}' encontrado!");
                 }
             }
             else
             {
-                throw new Exception($"Nenhum paciente com sintomas '{textoSintoma}' encontrado!");
+                throw new Exception("Nenhum paciente encontrado!");
             }
         }
-        else
+        catch (Exception ex)
         {
-            throw new Exception("Nenhum paciente encontrado!");
+            Console.WriteLine(ex.Message);
         }
     }
 
@@ -140,47 +179,63 @@ public class Relatorio
 
     public void MostrarAniversariantesDoMes(int mesAlvo)
     {
-        if (pacientes.Any())
+        try
         {
-            var reporte6 = pacientes.Where(paciente => paciente.dataDeNascimento.Month == mesAlvo);
-            if (reporte6.Any())
-            {
-                Console.WriteLine($"\n=== Pacientes que fazem aniversário em {mesAlvo} ===\n");
 
-                foreach (var paciente in reporte6)
+            if (pacientes.Any())
+            {
+                var reporte6 = pacientes.Where(paciente => paciente.dataDeNascimento.Month == mesAlvo);
+                if (reporte6.Any())
                 {
-                    Console.WriteLine($"Nome do paciente: {paciente.Nome} - Idade: {paciente.Idade} - CPF: {paciente.Cpf}");
+                    Console.WriteLine($"\n=== Pacientes que fazem aniversário em {mesAlvo} ===\n");
+
+                    foreach (var paciente in reporte6)
+                    {
+                        Console.WriteLine($"Nome do paciente: {paciente.Nome} - Idade: {paciente.Idade} - CPF: {paciente.Cpf}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum paciente faz aniversário em {mesAlvo}!");
                 }
             }
             else
             {
-                throw new Exception($"Nenhum paciente faz aniversário em {mesAlvo}!");
+                throw new Exception("Nenhum paciente encontrado!");
             }
         }
-        else
+        catch (Exception ex)
         {
-            throw new Exception("Nenhum paciente encontrado!");
+            Console.WriteLine(ex.Message);
         }
 
-        if (medicos.Any())
+        try
         {
-            var reporte7 = medicos.Where(medico => medico.dataDeNascimento.Month == mesAlvo);
-            if (reporte7.Any())
+
+            if (medicos.Any())
             {
-                Console.WriteLine($"\n=== Médicos que fazem aniversário em {mesAlvo} ===\n");
-                foreach (var medico in reporte7)
+                var reporte7 = medicos.Where(medico => medico.dataDeNascimento.Month == mesAlvo);
+                if (reporte7.Any())
                 {
-                    Console.WriteLine($"Nome do médico: {medico.Nome} - Idade: {medico.Idade} - CPF: {medico.Cpf} - CRM: {medico.Crm}");
+                    Console.WriteLine($"\n=== Médicos que fazem aniversário em {mesAlvo} ===\n");
+                    foreach (var medico in reporte7)
+                    {
+                        Console.WriteLine($"Nome do médico: {medico.Nome} - Idade: {medico.Idade} - CPF: {medico.Cpf} - CRM: {medico.Crm}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum medico faz aniversário em {mesAlvo}!");
                 }
             }
             else
             {
-                throw new Exception($"Nenhum medico faz aniversário em {mesAlvo}!");
+                throw new Exception($"Nenhum medico encontrado!");
             }
         }
-        else
+        catch (Exception ex)
         {
-            throw new Exception($"Nenhum medico encontrado!");
+            Console.WriteLine(ex.Message);
         }
     }
 }
