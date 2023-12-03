@@ -254,7 +254,7 @@ public class Relatorio
         }
     }
 
-    public static void OrdenarMedicosDecresAtendimentoConcluido(List<Medico> medicos){
+    public static void ordenarMedicosDecresAtendimentosConcluidos(List<Medico> medicos){
     try
     {
         if (medicos.Any())
@@ -277,5 +277,7 @@ public class Relatorio
     {
         Console.WriteLine(ex.Message);
     }
-  }   
+  }
+   
 }
+
