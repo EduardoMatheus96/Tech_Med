@@ -1,15 +1,6 @@
 public class Relatorio
 {
-    List<Paciente> pacientes;
-    List<Medico> medicos;
-
-    public Relatorio(List<Paciente> pacientes, List<Medico> medicos)
-    {
-        this.pacientes = pacientes;
-        this.medicos = medicos;
-    }
-
-    public void mostrarMedicosPorIdade(int idadeMinima, int idadeMaxima)
+    public static void mostrarMedicosPorIdade(List<Medico> medicos, int idadeMinima, int idadeMaxima)
     {
         try
         {
@@ -41,7 +32,7 @@ public class Relatorio
         }
     }
 
-    public void MostrarPacientesPorIdade(int idadeMinima, int idadeMaxima)
+    public static void MostrarPacientesPorIdade(List<Paciente> pacientes, int idadeMinima, int idadeMaxima)
     {
         try
         {
@@ -75,7 +66,7 @@ public class Relatorio
         }
     }
 
-    public void MostrarPacientesPorGenero(string sexoAlvo)
+    public static void MostrarPacientesPorGenero(List<Paciente> pacientes, string sexoAlvo)
     {
         try
         {
@@ -110,7 +101,7 @@ public class Relatorio
         }
     }
 
-    public void MostrarPacientesEmOrdemAlfabetica()
+    public static void MostrarPacientesEmOrdemAlfabetica(List<Paciente> pacientes)
     {
         try
         {
@@ -136,7 +127,7 @@ public class Relatorio
         }
     }
 
-    public void MostrarPacientesPorSintoma(string textoSintoma)
+    public static void MostrarPacientesPorSintoma(List<Paciente> pacientes, string textoSintoma)
     {
         try
         {
@@ -177,7 +168,7 @@ public class Relatorio
         return listaSintomas.Any(sintoma => sintoma.Contains(textoSintoma, StringComparison.OrdinalIgnoreCase));
     }
 
-    public void MostrarAniversariantesDoMes(int mesAlvo)
+    public static void MostrarAniversariantesDoMes(List<Medico> medicos, List<Paciente> pacientes, int mesAlvo)
     {
         try
         {
@@ -239,7 +230,7 @@ public class Relatorio
         }
     }
 
-    public void relatorioAtendimento(List<Atendimento> atendimentos, string palavra)
+    public static void relatorioAtendimento(List<Atendimento> atendimentos, string palavra)
     {
         List<Atendimento> resultado = atendimentos.Where(a => a.SuspeitaInicial.Contains(palavra, StringComparison.OrdinalIgnoreCase) ||
                                              a.DiagnosticoFinal.Contains(palavra, StringComparison.OrdinalIgnoreCase))
@@ -250,4 +241,16 @@ public class Relatorio
             Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - fim: {atendimento.Fim} - suspeita: {atendimento.SuspeitaInicial} - diagnostico final: {atendimento.DiagnosticoFinal}");
         }
     }
+
+    public static void ordenarDecresAtendimentoSemFinalizar(List<Atendimento> atendimentos)
+    {
+        var atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime));
+        try {
+            if(atendimentosSemFinalizar.Count > 0) {
+                atendimentosSemFinalizar.Sort((a1, a2) => a2.Inicio.CompareTo(a1.Inicio));
+            } else {
+                Console.WriteLine("Não existem atendimentos sem finalizar!")
+            }
+        }
+    }   
 }
