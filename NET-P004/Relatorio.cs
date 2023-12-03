@@ -161,7 +161,7 @@ public class Relatorio
         }
     }
 
-    private bool ContemSintoma(dynamic sintomas, string textoSintoma)
+    private static bool ContemSintoma(dynamic sintomas, string textoSintoma)
     {
         var listaSintomas = ((IEnumerable<object>)sintomas).Cast<string>().ToList();
 
@@ -241,10 +241,9 @@ public class Relatorio
             Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - fim: {atendimento.Fim} - suspeita: {atendimento.SuspeitaInicial} - diagnostico final: {atendimento.DiagnosticoFinal}");
         }
     }
-
     public static void ordenarDecresAtendimentoSemFinalizar(List<Atendimento> atendimentos)
     {
-        var atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime));
+        List<Atendimento> atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime)).ToList();
         try
         {
             if (atendimentosSemFinalizar.Count > 0)
@@ -253,8 +252,12 @@ public class Relatorio
             }
             else
             {
-                Console.WriteLine("Não existem atendimentos sem finalizar!")
+                throw new Exception($"Nenhum atendimento encontrado!");
             }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 
