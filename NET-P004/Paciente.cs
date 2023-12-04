@@ -1,4 +1,5 @@
-
+namespace AvaliacaoGrupo.dotnetP004
+{
     public class Paciente : Pessoa
     {
         string sexo;
@@ -26,7 +27,8 @@
             set { this.sintomas = value; }
         }
 
-        public Paciente(string _nome, DateTime _dataDeNascimento, string _cpf, string _sexo, List<string> _sintomas) : base(_nome, _dataDeNascimento, _cpf){
+        public Paciente(string _nome, DateTime _dataDeNascimento, string _cpf, string _sexo, List<string> _sintomas) : base(_nome, _dataDeNascimento, _cpf)
+        {
             sexo = _sexo;
             sintomas = _sintomas;
 
@@ -39,3 +41,4 @@
         //     else pacientes.Add(paciente);
         // }
     }
+}

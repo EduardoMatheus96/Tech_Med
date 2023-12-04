@@ -1,3 +1,5 @@
+namespace AvaliacaoGrupo.dotnetP004
+{
     public class Medico : Pessoa
     {
         private static HashSet<string> crmsUnicos = new HashSet<string>();
@@ -16,3 +18,4 @@
             }
         }
     }
+}
