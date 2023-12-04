@@ -350,6 +350,20 @@ namespace AvaliacaoGrupo.dotnetP004
                 Console.WriteLine(ex.Message);
             }
         }
+        public static void ExamesMaisUtilizados(List<Atendimento> atendimentos)
+        {
+            var examesMaisUtilizados = atendimentos
+            .SelectMany(atendimento => atendimento.ListaExamesResultado)
+            .GroupBy(tuple => tuple.Item1)
+            .OrderByDescending(group => group.Count())
+            .Take(10)
+            .Select(group => new { Exame = group.Key, Quantidade = group.Count() });
+
+            foreach (var exame in examesMaisUtilizados)
+            {
+                Console.WriteLine($"Exame: {exame.Exame.Titulo}, Quantidade: {exame.Quantidade}");
+            }
+        }
     }
 
 }
