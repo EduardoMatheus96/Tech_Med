@@ -12,7 +12,7 @@ public class App
             Console.WriteLine("1. Cadastrar Médico");
             Console.WriteLine("2. Cadastrar Paciente");
             Console.WriteLine("3. Cadastrar Exame");
-            Console.WriteLine("4. Cadastrar Atendimento");
+            Console.WriteLine("4. Iniciar atendimento");
             Console.WriteLine("5. Relatórios");
             Console.WriteLine("6. Sair\n");
 
@@ -106,7 +106,7 @@ public class App
 
                     option = Console.ReadLine();
 
-                } while(option != "n" || option != "nao");
+                } while (option != "n" || option != "nao");
 
                 Paciente paciente = new Paciente(nome, date, cpf, sexo, sintomas);
 
@@ -209,35 +209,32 @@ public class App
             switch (option)
             {
                 case "1":
-
-                    AdicionarMedico();
+                    Relatorio.mostrarMedicosPorIdade(medicos, 1, 100);
                     break;
                 case "2":
-                    AdicionarPaciente();
+                    Relatorio.MostrarPacientesPorIdade(pacientes, 1, 100);
                     break;
                 case "3":
-                    AdicionarExame();
+                    Relatorio.MostrarPacientesPorGenero(pacientes, "masculino");
                     break;
                 case "4":
-                    AdicionarAtendimento();
+                    Relatorio.MostrarPacientesEmOrdemAlfabetica(pacientes);
                     break;
                 case "5":
-                    MenuRelatorios();
+                    Relatorio.MostrarPacientesPorSintoma(pacientes, "sintoma");
                     break;
                 case "6":
-                    Environment.Exit(0);
+                    Relatorio.MostrarAniversariantesDoMes(medicos, pacientes, 6);
                     break;
                 case "7":
-                    Environment.Exit(0);
+                    Relatorio.MostrarAniversariantesDoMes(medicos, pacientes, 6);
                     break;
                 case "8":
-                    Environment.Exit(0);
+                    Relatorio.OrdenarMedicosDecresAtendimentoConcluido(atendimentos, medicos);
                     break;
                 case "9":
-                    Environment.Exit(0);
                     break;
                 case "10":
-                    Environment.Exit(0);
                     break;
                 case "11":
                     MenuPrincipal();

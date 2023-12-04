@@ -264,6 +264,7 @@ namespace AvaliacaoGrupo.dotnetP004
                 Console.WriteLine(ex.Message);
             }
         }
+
         // public static void ordenarDecresAtendimentoSemFinalizar(List<Atendimento> atendimentos)
         // {
         //     try
