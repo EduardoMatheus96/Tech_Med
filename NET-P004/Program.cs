@@ -1,3 +1,4 @@
+using AvaliacaoGrupo.dotnetP004;
 using System.Globalization;
 CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR");
 
@@ -53,11 +54,11 @@ Medico medico05 = new Medico("Roberto", new DateTime(1980, 11, 02), "56744012345
 // medico05.adicionarMedico(medico05, medicos);
 medicos.Add(medico05);
 
-Relatorio relatorio = new Relatorio(pacientes, medicos);
+//Relatorio relatorio = new Relatorio(pacientes, medicos);
 
-relatorio.mostrarMedicosPorIdade(18, 40);
-relatorio.MostrarPacientesPorIdade(18,100);
-relatorio.MostrarPacientesPorGenero("masculino");
-relatorio.MostrarPacientesEmOrdemAlfabetica();
-relatorio.MostrarPacientesPorSintoma("febre");
-relatorio.MostrarAniversariantesDoMes(11);
+Relatorio.mostrarMedicosPorIdade(medicos, 18, 40);
+Relatorio.MostrarPacientesPorIdade(pacientes, 18, 100);
+Relatorio.MostrarPacientesPorGenero(pacientes, "masculino");
+Relatorio.MostrarPacientesEmOrdemAlfabetica(pacientes);
+Relatorio.MostrarPacientesPorSintoma(pacientes, "febre");
+Relatorio.MostrarAniversariantesDoMes(medicos, pacientes, 11);
