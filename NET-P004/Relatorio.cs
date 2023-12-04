@@ -265,38 +265,38 @@ namespace AvaliacaoGrupo.dotnetP004
             }
         }
 
-        // public static void ordenarDecresAtendimentoSemFinalizar(List<Atendimento> atendimentos)
-        // {
-        //     try
-        //     {
-        //         if (atendimentos.Any())
-        //         {
+        public static void ordenarDecresAtendimentoSemFinalizar(List<Atendimento> atendimentos)
+        {
+            try
+            {
+                if (atendimentos.Any())
+                {
 
-        //             List<Atendimento> atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime)).ToList();
-        //             if (atendimentosSemFinalizar.Count > 0)
-        //             {
-        //                 Console.WriteLine($"\n=== Atendimentos sem finalizar em ordem decrescente: ===\n");
-        //                 List<Atendimento> resultado = atendimentosSemFinalizar.Sort((a1, a2) => a2.Inicio.CompareTo(a1.Inicio));
-        //                 foreach (Atendimento atendimento in resultado)
-        //                 {
-        //                     Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - suspeita: {atendimento.SuspeitaInicial}");
-        //                 }
-        //             }
-        //             else
-        //             {
-        //                 throw new Exception($"Nenhum atendimento sem finalizar encontrado!");
-        //             }
-        //         }
-        //         else
-        //         {
-        //             throw new Exception($"Nenhum atendimento encontrado!");
-        //         }
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Console.WriteLine(ex.Message);
-        //     }
-        // }
+                    List<Atendimento> atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime)).ToList();
+                    if (atendimentosSemFinalizar.Count > 0)
+                    {
+                        Console.WriteLine($"\n=== Atendimentos sem finalizar em ordem decrescente: ===\n");
+                        atendimentosSemFinalizar.Sort((a1, a2) => a2.Inicio.CompareTo(a1.Inicio));
+                        foreach (Atendimento atendimento in atendimentosSemFinalizar)
+                        {
+                            Console.WriteLine($"Atendimento - inicio: {atendimento.Inicio} - suspeita: {atendimento.SuspeitaInicial}");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Nenhum atendimento sem finalizar encontrado!");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum atendimento encontrado!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
         public static void OrdenarMedicosDecresAtendimentoConcluido(List<Atendimento> atendimentos, List<Medico> medicos)
         {
