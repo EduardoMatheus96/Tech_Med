@@ -237,6 +237,7 @@ public class App
 
             atendimento.Exames = examesResultado;
             atendimento.iniciarAtendimento(suspeita);
+            atendimentos.Add(atendimento);
             // Console.WriteLine($"{atendimento.Inicio}");
             // Console.WriteLine($"{atendimento.SuspeitaInicial}");
             // Console.WriteLine($"{atendimento.MedicoResponsavel.Nome}");
@@ -256,7 +257,6 @@ public class App
 
     private void encerrarAtendimento()
     {
-        Console.WriteLine($"Escolha o atendimento: ");
         for (int i = 0; i < atendimentos.Count; i++)
         {
             Console.WriteLine($"\n{i}. {atendimentos[i].Inicio} - {atendimentos[i].Paciente.Nome} - {atendimentos[i].MedicoResponsavel.Nome} - {atendimentos[i].SuspeitaInicial} ");
