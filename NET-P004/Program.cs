@@ -66,3 +66,7 @@ app.MenuPrincipal();
 // Relatorio.MostrarPacientesEmOrdemAlfabetica(pacientes);
 // Relatorio.MostrarPacientesPorSintoma(pacientes, "febre");
 // Relatorio.MostrarAniversariantesDoMes(medicos, pacientes, 11);
+// Relatorio.relatorioAtendimentoComPalavra(pacientes, "febre");
+// Relatorio.ordenarDecresAtendimentoSemFinalizar(pacientes);
+// Relatorio.OrdenarMedicosDecresAtendimentoConcluido(medicos);
+// Relatorio.ContemSintoma(pacientes, "febre");
