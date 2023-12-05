@@ -10,7 +10,7 @@ public class App
         while (true)
         {
             Console.WriteLine($"\n===== Menu Tech_Med =====\n");
-            
+
             Console.WriteLine("1. Cadastrar Médico");
             Console.WriteLine("2. Cadastrar Paciente");
             Console.WriteLine("3. Cadastrar Exame");
@@ -57,7 +57,7 @@ public class App
         try
         {
             Console.WriteLine($"\n===== Cadastrando um novo medico =====\n");
-            
+
             Console.Write("Nome do médico: ");
             string? nome = Console.ReadLine() ?? throw new ArgumentNullException(nameof(nome));
 
@@ -75,7 +75,7 @@ public class App
 
                 medicos.Add(medico);
                 Console.WriteLine($"Médico {medico.Nome} adicionado com sucesso!");
-                
+
             }
             else
             {
@@ -120,7 +120,7 @@ public class App
 
                 pacientes.Add(paciente);
                 Console.WriteLine($"Paciente {paciente.Nome} adicionado com sucesso!");
-                
+
             }
             else
             {
@@ -153,7 +153,7 @@ public class App
 
                 exames.Add(exame);
                 Console.WriteLine($"Exame {exame.Titulo} adicionado com sucesso!");
-                
+
             }
             else
             {
@@ -167,95 +167,129 @@ public class App
     }
     private void AdicionarAtendimento()
     {
-        try
+        if (medicos.Count == 0 || pacientes.Count == 0 || exames.Count == 0)
         {
-            Console.WriteLine($"\n===== Cadastrando um novo atendimento =====\n");
-            Medico medico;
-            Paciente paciente;
-            List<(Exame, string)> examesResultado = new List<(Exame, string)>();
-            Atendimento atendimento = new Atendimento();
-
-            Console.Write("Insira a suspeita inicial: ");
-            string? suspeita = Console.ReadLine() ?? throw new ArgumentNullException(nameof(suspeita));
-
-            Console.Write("Valor do atendimento: ");
-            if (float.TryParse(Console.ReadLine(), out float valor))
+            if (medicos.Count == 0 && pacientes.Count == 0 && exames.Count == 0)
             {
-                atendimento.Valor = valor;
+                Console.WriteLine("É necessário ter pelo menos um médico, um paciente e um exame");
+            }
+            else if (medicos.Count == 0 && pacientes.Count == 0)
+            {
+                Console.WriteLine("É necessário ter pelo menos um médico e um paciente");
+            }
+            else if (medicos.Count == 0 && exames.Count == 0)
+            {
+                Console.WriteLine("É necessário ter pelo menos um médico e um exame");
+            }
+            else if (pacientes.Count == 0 && exames.Count == 0)
+            {
+                Console.WriteLine("É necessário ter pelo menos um paciente e um exame");
+            }
+            else if (medicos.Count == 0)
+            {
+                Console.WriteLine("É necessário ter pelo menos um médico");
+            }
+            else if (pacientes.Count == 0)
+            {
+                Console.WriteLine("É necessário ter pelo menos um paciente");
+            }
+            else if (exames.Count == 0)
+            {
+                Console.WriteLine("É necessário ter pelo menos um exame");
+            }
+        }
+        else
+        {
+            try
+            {
+                Console.WriteLine($"\n===== Cadastrando um novo atendimento =====\n");
+                Medico medico;
+                Paciente paciente;
+                List<(Exame, string)> examesResultado = new List<(Exame, string)>();
+                Atendimento atendimento = new Atendimento();
 
-                for (int i = 0; i < medicos.Count; i++)
+                Console.Write("Insira a suspeita inicial: ");
+                string? suspeita = Console.ReadLine() ?? throw new ArgumentNullException(nameof(suspeita));
+
+                Console.Write("Valor do atendimento: ");
+                if (float.TryParse(Console.ReadLine(), out float valor))
                 {
-                    Console.WriteLine($"{i}. {medicos[i].Nome}");
-                }
+                    atendimento.Valor = valor;
 
-                Console.Write("Escolha o médico: ");
-                if (int.TryParse(Console.ReadLine(), out int opcaoMedico))
-                {
-                    if (opcaoMedico <= medicos.Count)
+                    for (int i = 0; i < medicos.Count; i++)
                     {
-                        medico = medicos[opcaoMedico];
-                        atendimento.MedicoResponsavel = medico;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Médico não existe na lista");
-                    }
-                }
-
-                for (int i = 0; i < pacientes.Count; i++)
-                {
-                    Console.WriteLine($"\n{i}. {pacientes[i].Nome}");
-                }
-
-                Console.Write("Escolha o paciente: ");
-                if (int.TryParse(Console.ReadLine(), out int opcaoPaciente))
-                {
-                    if (opcaoPaciente <= pacientes.Count)
-                    {
-                        paciente = pacientes[opcaoPaciente];
-                        atendimento.Paciente = paciente;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Paciente não existe na lista");
-                    }
-                }
-
-                while (true)
-                {
-                    for (int i = 0; i < exames.Count; i++)
-                    {
-                        Console.WriteLine($"\n{i}. {exames[i].Titulo}");
+                        Console.WriteLine($"{i}. {medicos[i].Nome}");
                     }
 
-                    Console.Write("Escolha o exame: ");
-                    if (int.TryParse(Console.ReadLine(), out int opcaoExame))
+                    Console.Write("Escolha o médico: ");
+                    if (int.TryParse(Console.ReadLine(), out int opcaoMedico))
                     {
-                        if (opcaoExame <= exames.Count)
+                        if (opcaoMedico <= medicos.Count)
                         {
-                            examesResultado.Add((exames[opcaoExame], ""));
+                            medico = medicos[opcaoMedico];
+                            atendimento.MedicoResponsavel = medico;
                         }
                         else
                         {
-                            Console.WriteLine($"Exame não existe na lista");
-                            break;
+                            Console.WriteLine($"Médico não existe na lista");
+                        }
+                    }
+
+                    for (int i = 0; i < pacientes.Count; i++)
+                    {
+                        Console.WriteLine($"\n{i}. {pacientes[i].Nome}");
+                    }
+
+                    Console.Write("Escolha o paciente: ");
+                    if (int.TryParse(Console.ReadLine(), out int opcaoPaciente))
+                    {
+                        if (opcaoPaciente <= pacientes.Count)
+                        {
+                            paciente = pacientes[opcaoPaciente];
+                            atendimento.Paciente = paciente;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Paciente não existe na lista");
+                        }
+                    }
+
+                    while (true)
+                    {
+                        for (int i = 0; i < exames.Count; i++)
+                        {
+                            Console.WriteLine($"\n{i}. {exames[i].Titulo}");
+                        }
+
+                        Console.Write("Escolha o exame: ");
+                        if (int.TryParse(Console.ReadLine(), out int opcaoExame))
+                        {
+                            if (opcaoExame <= exames.Count)
+                            {
+                                examesResultado.Add((exames[opcaoExame], ""));
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Exame não existe na lista");
+                                break;
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                Console.WriteLine("Por favor, insira um número decimal válido.");
-            }
+                else
+                {
+                    Console.WriteLine("Por favor, insira um número decimal válido.");
+                }
 
-            atendimento.Exames = examesResultado;
-            atendimento.iniciarAtendimento(suspeita);
-            atendimentos.Add(atendimento);
-            Console.WriteLine($"Atendimento iniciado com sucesso!");
-        }
-        catch (FormatException)
-        {
-            Console.WriteLine("Entrada inválida!");
+                atendimento.Exames = examesResultado;
+                atendimento.iniciarAtendimento(suspeita);
+                atendimentos.Add(atendimento);
+                Console.WriteLine($"Atendimento iniciado com sucesso!");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Entrada inválida!");
+            }
         }
     }
 
@@ -280,7 +314,7 @@ public class App
                 string? diagnostico = Console.ReadLine() ?? throw new ArgumentNullException(nameof(diagnostico));
                 atendimentos[opcaoAtendimento].finalizarAtendimento(diagnostico);
                 Console.WriteLine($"Atendimento finalizado com sucesso!");
-                
+
             }
             else
             {
