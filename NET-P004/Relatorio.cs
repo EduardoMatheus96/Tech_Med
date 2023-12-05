@@ -174,7 +174,6 @@ namespace AvaliacaoGrupo.dotnetP004
         {
             try
             {
-
                 if (pacientes.Any())
                 {
                     var reporte6 = pacientes.Where(paciente => paciente.dataDeNascimento.Month == mesAlvo);
@@ -272,7 +271,7 @@ namespace AvaliacaoGrupo.dotnetP004
                 if (atendimentos.Any())
                 {
 
-                    List<Atendimento> atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime)).ToList();
+                    List<Atendimento> atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim == DateTime.MinValue).ToList();
                     if (atendimentosSemFinalizar.Count > 0)
                     {
                         Console.WriteLine($"\n=== Atendimentos sem finalizar em ordem decrescente: ===\n");
@@ -357,16 +356,18 @@ namespace AvaliacaoGrupo.dotnetP004
                 if (atendimentos.Any())
                 {
                     var examesMaisUtilizados = atendimentos
-                    .SelectMany(atendimento => atendimento.exames)
+                    .SelectMany(atendimento => atendimento.Exames)
                     .GroupBy(tuple => tuple.Item1)
                     .OrderByDescending(group => group.Count())
                     .Take(10)
                     .Select(group => new { Exame = group.Key, Quantidade = group.Count() });
                     if (examesMaisUtilizados.Any())
                     {
+                        Console.WriteLine($"\n=== Exames mais utilizados: ===\n");
+                        
                         foreach (var exame in examesMaisUtilizados)
                         {
-                            Console.WriteLine($"Exame: {exame.Exame.titulo}, Quantidade: {exame.Quantidade}");
+                            Console.WriteLine($"Exame: {exame.Exame.Titulo}, Quantidade: {exame.Quantidade}");
                         }
                     }
                     else

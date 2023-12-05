@@ -31,14 +31,6 @@ namespace AvaliacaoGrupo.dotnetP004
         {
             sexo = _sexo;
             sintomas = _sintomas;
-
         }
-        // public void adicionarPaciente(Paciente paciente, List<Paciente> pacientes){
-        //     if (pacientes.Any(p => p.Cpf == paciente.Cpf))
-        //     {
-        //         throw new ArgumentException("Paciente invalido, CRM ou CPF Ja presente na lista de pacientes !!!");
-        //     }
-        //     else pacientes.Add(paciente);
-        // }
     }
 }
