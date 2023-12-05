@@ -11,6 +11,13 @@ namespace AvaliacaoGrupo.dotnetP004
         Paciente? paciente;
         string? diagnosticoFinal;
 
+        // public Atendimento(float _valor, Medico _medicoResponsavel, Paciente _paciente)
+        // {
+        //     valor = _valor;
+        //     medicoResponsavel = _medicoResponsavel;
+        //     paciente = _paciente;
+        // }
+
         public DateTime Inicio
         {
             get { return inicio; }

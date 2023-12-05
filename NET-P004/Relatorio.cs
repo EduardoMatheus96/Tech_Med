@@ -174,7 +174,6 @@ namespace AvaliacaoGrupo.dotnetP004
         {
             try
             {
-
                 if (pacientes.Any())
                 {
                     var reporte6 = pacientes.Where(paciente => paciente.dataDeNascimento.Month == mesAlvo);
