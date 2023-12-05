@@ -58,6 +58,33 @@ app.MenuPrincipal();
 // // medico05.adicionarMedico(medico05, medicos);
 // medicos.Add(medico05);
 
+//Crindo Lista de exames
+
+// List<Exame> exames = new List<Exame>();
+// Exame exame01 = new Exame("febre");
+// exames.Add(exame01);
+// Exame exame02 = new Exame("dor de cabeça");
+// exames.Add(exame02);
+// Exame exame03 = new Exame("tosse");
+// exames.Add(exame03);
+// Exame exame04 = new Exame("dor de garganta");
+// exames.Add(exame04);
+// Exame exame05 = new Exame("dor de braço");
+
+//Criando Lista de atendimentos
+
+// List<Atendimento> atendimentos = new List<Atendimento>();
+// Atendimento atendimento01 = new Atendimento(paciente01, medico01, exames);
+// atendimentos.Add(atendimento01);
+// Atendimento atendimento02 = new Atendimento(paciente02, medico02, exames);
+// atendimentos.Add(atendimento02);
+// Atendimento atendimento03 = new Atendimento(paciente03, medico03, exames);
+// atendimentos.Add(atendimento03);
+// Atendimento atendimento04 = new Atendimento(paciente04, medico04, exames);
+// atendimentos.Add(atendimento04);
+// Atendimento atendimento05 = new Atendimento(paciente05, medico05, exames);
+// atendimentos.Add(atendimento05);
+
 // //Relatorio relatorio = new Relatorio(pacientes, medicos);
 
 // Relatorio.mostrarMedicosPorIdade(medicos, 18, 40);
