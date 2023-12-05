@@ -356,7 +356,7 @@ namespace AvaliacaoGrupo.dotnetP004
                 if (atendimentos.Any())
                 {
                     var examesMaisUtilizados = atendimentos
-                    .SelectMany(atendimento => atendimento.exames)
+                    .SelectMany(atendimento => atendimento.Exames)
                     .GroupBy(tuple => tuple.Item1)
                     .OrderByDescending(group => group.Count())
                     .Take(10)
@@ -365,7 +365,7 @@ namespace AvaliacaoGrupo.dotnetP004
                     {
                         foreach (var exame in examesMaisUtilizados)
                         {
-                            Console.WriteLine($"Exame: {exame.Exame.titulo}, Quantidade: {exame.Quantidade}");
+                            Console.WriteLine($"Exame: {exame.Exame.Titulo}, Quantidade: {exame.Quantidade}");
                         }
                     }
                     else

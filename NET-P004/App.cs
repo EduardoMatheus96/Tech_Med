@@ -329,8 +329,10 @@ public class App
                     Relatorio.OrdenarMedicosDecresAtendimentoConcluido(atendimentos, medicos);
                     break;
                 case "9":
+                    lePalavraAtendimento();
                     break;
                 case "10":
+                    Relatorio.ExamesMaisUtilizados(atendimentos);
                     break;
                 case "11":
                     MenuPrincipal();
@@ -428,5 +430,13 @@ public class App
         {
             Console.WriteLine("Por favor, insira um número inteiro válido.");
         }
+    }
+
+    private void lePalavraAtendimento()
+    {
+        Console.Write("Insira uma palavra que possa conter em uma suspeita ou em um diagnóstico dos atendimentos: ");
+        string? palavra = Console.ReadLine() ?? throw new ArgumentNullException(nameof(palavra));
+
+        Relatorio.relatorioAtendimentoComPalavra(atendimentos, palavra);
     }
 }
