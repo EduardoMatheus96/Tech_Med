@@ -349,6 +349,39 @@ namespace AvaliacaoGrupo.dotnetP004
                 Console.WriteLine(ex.Message);
             }
         }
+        public static void ExamesMaisUtilizados(List<Atendimento> atendimentos)
+        {
+            try
+            {
+                if (atendimentos.Any())
+                {
+                    var examesMaisUtilizados = atendimentos
+                    .SelectMany(atendimento => atendimento.exames)
+                    .GroupBy(tuple => tuple.Item1)
+                    .OrderByDescending(group => group.Count())
+                    .Take(10)
+                    .Select(group => new { Exame = group.Key, Quantidade = group.Count() });
+                    if (examesMaisUtilizados.Any())
+                    {
+                        foreach (var exame in examesMaisUtilizados)
+                        {
+                            Console.WriteLine($"Exame: {exame.Exame.titulo}, Quantidade: {exame.Quantidade}");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Nenhum exame encontrado!");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nenhum atendimento encontrado!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
-
 }
