@@ -9,6 +9,8 @@ public class App
     {
         while (true)
         {
+            Console.WriteLine($"\n===== Menu Tech_Med =====\n");
+            
             Console.WriteLine("1. Cadastrar Médico");
             Console.WriteLine("2. Cadastrar Paciente");
             Console.WriteLine("3. Cadastrar Exame");
@@ -54,6 +56,8 @@ public class App
     {
         try
         {
+            Console.WriteLine($"\n===== Cadastrando um novo medico =====\n");
+            
             Console.Write("Nome do médico: ");
             string? nome = Console.ReadLine() ?? throw new ArgumentNullException(nameof(nome));
 
@@ -70,6 +74,8 @@ public class App
                 Medico medico = new Medico(nome, date, cpf, crm);
 
                 medicos.Add(medico);
+                Console.WriteLine($"Médico {medico.Nome} adicionado com sucesso!");
+                
             }
             else
             {
@@ -86,6 +92,7 @@ public class App
         List<string> sintomas = new List<string>();
         try
         {
+            Console.WriteLine($"\n===== Cadastrando um novo paciente =====\n");
             Console.Write("Nome do paciente: ");
             string? nome = Console.ReadLine() ?? throw new ArgumentNullException(nameof(nome));
 
@@ -112,6 +119,8 @@ public class App
                 Paciente paciente = new Paciente(nome, date, cpf, sexo, sintomas);
 
                 pacientes.Add(paciente);
+                Console.WriteLine($"Paciente {paciente.Nome} adicionado com sucesso!");
+                
             }
             else
             {
@@ -127,6 +136,7 @@ public class App
     {
         try
         {
+            Console.WriteLine($"\n===== Cadastrando um novo exame =====\n");
             Console.Write("Título do exame: ");
             string? titulo = Console.ReadLine() ?? throw new ArgumentNullException(nameof(titulo));
 
@@ -142,6 +152,8 @@ public class App
                 Exame exame = new Exame(titulo, valor, descricao, local);
 
                 exames.Add(exame);
+                Console.WriteLine($"Exame {exame.Titulo} adicionado com sucesso!");
+                
             }
             else
             {
@@ -157,6 +169,7 @@ public class App
     {
         try
         {
+            Console.WriteLine($"\n===== Cadastrando um novo atendimento =====\n");
             Medico medico;
             Paciente paciente;
             List<(Exame, string)> examesResultado = new List<(Exame, string)>();
@@ -172,7 +185,7 @@ public class App
 
                 for (int i = 0; i < medicos.Count; i++)
                 {
-                    Console.WriteLine($"\n{i}. {medicos[i].Nome}");
+                    Console.WriteLine($"{i}. {medicos[i].Nome}");
                 }
 
                 Console.Write("Escolha o médico: ");
@@ -238,16 +251,7 @@ public class App
             atendimento.Exames = examesResultado;
             atendimento.iniciarAtendimento(suspeita);
             atendimentos.Add(atendimento);
-            // Console.WriteLine($"{atendimento.Inicio}");
-            // Console.WriteLine($"{atendimento.SuspeitaInicial}");
-            // Console.WriteLine($"{atendimento.MedicoResponsavel.Nome}");
-            // foreach (var exame in atendimento.Exames)
-            // {
-            //     Console.WriteLine($"Exame: {exame.Item1.Titulo} - Resultado: {exame.Item2}");
-
-            // }
-            // Console.WriteLine($"{atendimento.Paciente.Nome}");
-            // Console.WriteLine($"{atendimento.Valor}");
+            Console.WriteLine($"Atendimento iniciado com sucesso!");
         }
         catch (FormatException)
         {
@@ -257,6 +261,7 @@ public class App
 
     private void encerrarAtendimento()
     {
+        Console.WriteLine($"\n===== Encerrando um atendimento =====\n");
         for (int i = 0; i < atendimentos.Count; i++)
         {
             Console.WriteLine($"\n{i}. {atendimentos[i].Inicio} - {atendimentos[i].Paciente.Nome} - {atendimentos[i].MedicoResponsavel.Nome} - {atendimentos[i].SuspeitaInicial} ");
@@ -274,6 +279,8 @@ public class App
                 Console.Write("Insira diagnóstico: ");
                 string? diagnostico = Console.ReadLine() ?? throw new ArgumentNullException(nameof(diagnostico));
                 atendimentos[opcaoAtendimento].finalizarAtendimento(diagnostico);
+                Console.WriteLine($"Atendimento finalizado com sucesso!");
+                
             }
             else
             {
@@ -286,7 +293,7 @@ public class App
     {
         while (true)
         {
-            Console.WriteLine("==== Escolha o relatório ====\n");
+            Console.WriteLine("\n===== Menu de  relatórios =====\n");
             Console.WriteLine("1. Médicos com idade entre dois valores");
             Console.WriteLine("2. Pacientes com idade entre dois valores");
             Console.WriteLine("3. Pacientes do sexo informado pelo usuário.");

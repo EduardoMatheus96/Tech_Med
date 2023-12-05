@@ -271,7 +271,7 @@ namespace AvaliacaoGrupo.dotnetP004
                 if (atendimentos.Any())
                 {
 
-                    List<Atendimento> atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim != default(DateTime)).ToList();
+                    List<Atendimento> atendimentosSemFinalizar = atendimentos.Where(atendimento => atendimento.Fim == DateTime.MinValue).ToList();
                     if (atendimentosSemFinalizar.Count > 0)
                     {
                         Console.WriteLine($"\n=== Atendimentos sem finalizar em ordem decrescente: ===\n");
@@ -363,6 +363,8 @@ namespace AvaliacaoGrupo.dotnetP004
                     .Select(group => new { Exame = group.Key, Quantidade = group.Count() });
                     if (examesMaisUtilizados.Any())
                     {
+                        Console.WriteLine($"\n=== Exames mais utilizados: ===\n");
+                        
                         foreach (var exame in examesMaisUtilizados)
                         {
                             Console.WriteLine($"Exame: {exame.Exame.Titulo}, Quantidade: {exame.Quantidade}");
