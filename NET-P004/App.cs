@@ -266,7 +266,16 @@ public class App
                         {
                             if (opcaoExame <= exames.Count)
                             {
-                                examesResultado.Add((exames[opcaoExame], ""));
+                                Console.Write($"Qual o resultado do exame:");
+                                string? resultado = Console.ReadLine();
+                                examesResultado.Add((exames[opcaoExame], resultado ?? ""));
+                                Console.Write("Adicionar mais exames?: (s) ou (n):");
+
+                                string? parar = Console.ReadLine();
+                                if (parar!.Equals("n") || parar.Equals("nao") || parar.Equals("N"))
+                                {
+                                    break;
+                                }
                             }
                             else
                             {
@@ -275,6 +284,12 @@ public class App
                             }
                         }
                     }
+                    Console.Write("----Exames e resultados----\n\n");
+                    foreach (var exame in examesResultado)
+                    {
+                        Console.Write($" Exame - {exame.Item1.Titulo} - resultado -> {exame.Item2}\n");
+                    }
+
                 }
                 else
                 {
