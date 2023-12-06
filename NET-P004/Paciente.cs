@@ -54,5 +54,13 @@ namespace AvaliacaoGrupo.dotnetP004
             sexo = _sexo;
             sintomas = _sintomas;
         }
+
+        public Paciente(string _nome, DateTime _dataDeNascimento, string _cpf, string _sexo, List<string> _sintomas, PlanoDeSaude _plano, List<Pagamento> _pagamentos) : base(_nome, _dataDeNascimento, _cpf)
+        {
+            sexo = _sexo;
+            sintomas = _sintomas;
+            planoDeSaude = _plano;
+            pagamentos = _pagamentos;
+        }
     }
 }
