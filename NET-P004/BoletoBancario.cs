@@ -1,22 +1,15 @@
-namespace NET_P004;
-public class BoletoBancario: IPagamento{
-    public void RealizarPagamento(double valor){
-      Console.WriteLine($"Pagamento de {valor} pagamento concluído com sucesso");
-   }
+namespace AvaliacaoGrupo.dotnetP004;
+public class BoletoBancario : IPagamento
+{
+    public string? Descricao { get; set; }
+    public double ValorBruto { get; set; }
 
-   public void Descrição(string descricao){ {
-      Console.WriteLine("Boleto bancário");
-   }
+    public double Desconto { get; set; }
 
-   public void valorbruto(double valor){
-      Console.WriteLine($"Valor bruto: {valor}");
-   }
+    public DateTime DataHora { get; set; }
 
-   public void desconto(double desconto){
-       Console.WriteLine("Desconto: " + desconto);
-   }
-
-   public void DataPagamento(DateTime data){
-       Console.WriteLine("Data de pagamento: " + data);
-   }
+    public void RealizarPagamento(double valor)
+    {
+        Console.WriteLine($"Pagamento de {valor} - pagamento de boleto bancário realizado com sucesso!");
+    }
 }
