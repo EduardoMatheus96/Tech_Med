@@ -62,12 +62,11 @@ namespace AvaliacaoGrupo.dotnetP004
         //     sintomas = _sintomas;
         // }
 
-        public Paciente(string _nome, DateTime _dataDeNascimento, string _cpf, string _sexo, List<string> _sintomas, PlanoDeSaude _plano, IPagamento _pagamento) : base(_nome, _dataDeNascimento, _cpf)
+        public Paciente(string _nome, DateTime _dataDeNascimento, string _cpf, string _sexo, List<string> _sintomas, PlanoDeSaude _plano) : base(_nome, _dataDeNascimento, _cpf)
         {
             sexo = _sexo;
             sintomas = _sintomas;
             planoDeSaude = _plano;
-            pagamentos.Add(_pagamento);
         }
     }
 }
