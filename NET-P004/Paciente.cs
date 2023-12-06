@@ -7,7 +7,7 @@ namespace AvaliacaoGrupo.dotnetP004
 
         PlanoDeSaude planoDeSaude;
 
-        List<Pagamento> pagamentos = new List<Pagamento>;
+        public List<IPagamento> pagamentos = new List<IPagamento>();
 
         public string Sexo
         {
@@ -37,12 +37,12 @@ namespace AvaliacaoGrupo.dotnetP004
             set { this.planoDeSaude = value; }
         }
 
-        public List<Pagamento> Pagamentos
+        public List<IPagamento> Pagamentos
         {
             get { return pagamentos; }
             set
             {
-                foreach (Pagamento pagamento in value)
+                foreach (IPagamento pagamento in value)
                 {
                     this.pagamentos.Add(pagamento);
                 }
@@ -55,12 +55,12 @@ namespace AvaliacaoGrupo.dotnetP004
             sintomas = _sintomas;
         }
 
-        public Paciente(string _nome, DateTime _dataDeNascimento, string _cpf, string _sexo, List<string> _sintomas, PlanoDeSaude _plano, List<Pagamento> _pagamentos) : base(_nome, _dataDeNascimento, _cpf)
+        public Paciente(string _nome, DateTime _dataDeNascimento, string _cpf, string _sexo, List<string> _sintomas, PlanoDeSaude _plano, IPagamento _pagamento) : base(_nome, _dataDeNascimento, _cpf)
         {
             sexo = _sexo;
             sintomas = _sintomas;
             planoDeSaude = _plano;
-            pagamentos = _pagamentos;
+            pagamentos.Add(_pagamento);
         }
     }
 }
