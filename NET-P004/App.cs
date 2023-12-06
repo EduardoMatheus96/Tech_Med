@@ -100,12 +100,13 @@ public class App
             Console.WriteLine(ex.Message);
         }
     }
-    
+
     private void AdicionarPaciente()
     {
         List<string> sintomas = new List<string>();
         try
         {
+            PlanoDeSaude? plano = null;
             Console.WriteLine($"\n===== Cadastrando um novo paciente =====\n");
             Console.Write("Nome do paciente: ");
             string? nome = Console.ReadLine() ?? throw new ArgumentNullException(nameof(nome));
@@ -120,16 +121,21 @@ public class App
                 Console.Write("Sexo: ");
                 string? sexo = Console.ReadLine() ?? throw new ArgumentNullException(nameof(sexo));
 
+                for (int i = 0; i < planosDeSaude.Count; i++)
+                {
+                    Console.WriteLine($"\n{i}. {planosDeSaude[i].Titulo}");
+                }
+
                 Console.Write("Escolha o plano de saúde: ");
                 if (int.TryParse(Console.ReadLine(), out int opcaoPlano))
                 {
-                    if (opcaoPlano <= PlanoDeSaude.Count)
+                    if (opcaoPlano <= planosDeSaude.Count)
                     {
-                        PlanoDeSaude plano = planosDeSaude[opcaoPlano]
+                        plano = planosDeSaude[opcaoPlano];
                     }
                     else
                     {
-                        Console.WriteLine($"Médico não existe na lista");
+                        Console.WriteLine($"Plano não existe na lista");
                     }
                 }
 
@@ -143,7 +149,7 @@ public class App
                     sintomas.Add(sintoma);
                 } while (!sintoma!.Equals("n") && !sintoma.Equals("nao"));
 
-                Paciente paciente = new Paciente(nome, date, cpf, sexo, plano, sintomas);
+                Paciente paciente = new Paciente(nome, date, cpf, sexo, sintomas, plano);
 
                 pacientes.Add(paciente);
                 Console.WriteLine($"Paciente {paciente.Nome} adicionado com sucesso!");
@@ -203,7 +209,7 @@ public class App
 
             Console.Write("Preço do plano de saúde: ");
             if (float.TryParse(Console.ReadLine(), out float valor))
-            {   
+            {
                 PlanoDeSaude plano = new PlanoDeSaude(titulo, valor);
                 planosDeSaude.Add(plano);
                 Console.WriteLine($"Plano de saúde {plano.Titulo} adicionado com sucesso!");
@@ -224,6 +230,10 @@ public class App
         try
         {
             Console.WriteLine($"\n===== Realizando pagamento de plano de saúde =====\n");
+            for (int i = 0; i < pacientes.Count; i++)
+            {
+                Console.WriteLine($"\n{i}. {pacientes[i].Nome}");
+            }
             Console.Write("Escolha o paciente: ");
             if (int.TryParse(Console.ReadLine(), out int opcaoPaciente))
             {
@@ -235,14 +245,22 @@ public class App
                     Console.WriteLine("2. Boleto");
                     Console.WriteLine("3. Dinheiro em espécie");
                     Console.Write("Qual o método de pagamento? ");
-                    if(int.TryParse(Console.ReadLine(), out int opcaoPagamento)) {
-                        if (opcaoPagamento == 1) {
+                    if (int.TryParse(Console.ReadLine(), out int opcaoPagamento))
+                    {
+                        if (opcaoPagamento == 1)
+                        {
                             paciente.efetuarPagamento(cartaoCredito);
-                        } else if (opcaoPagamento == 2) {
+                        }
+                        else if (opcaoPagamento == 2)
+                        {
                             paciente.efetuarPagamento(boletoBancario);
-                        } else if (opcaoPagamento == 3){
+                        }
+                        else if (opcaoPagamento == 3)
+                        {
                             paciente.efetuarPagamento(dinheiro);
-                        } else {
+                        }
+                        else
+                        {
                             Console.Write("Opção inválida!");
                         }
                     }

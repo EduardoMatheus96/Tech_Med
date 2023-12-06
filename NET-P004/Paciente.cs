@@ -5,7 +5,7 @@ namespace AvaliacaoGrupo.dotnetP004
         string sexo;
         List<string> sintomas;
 
-        PlanoDeSaude planoDeSaude;
+        PlanoDeSaude? planoDeSaude;
 
         public List<IPagamento> pagamentos = new List<IPagamento>();
 
@@ -51,7 +51,7 @@ namespace AvaliacaoGrupo.dotnetP004
 
         public void efetuarPagamento(IPagamento pagamento)
         {
-            pagamento.RealizarPagamento(this.planoDeSaude.Mensalidade);
+            pagamento.RealizarPagamento(this.planoDeSaude!.Mensalidade);
             this.pagamentos.Add(pagamento);
         }
 
@@ -62,11 +62,11 @@ namespace AvaliacaoGrupo.dotnetP004
         //     sintomas = _sintomas;
         // }
 
-        public Paciente(string _nome, DateTime _dataDeNascimento, string _cpf, string _sexo, List<string> _sintomas, PlanoDeSaude _plano) : base(_nome, _dataDeNascimento, _cpf)
+        public Paciente(string _nome, DateTime _dataDeNascimento, string _cpf, string _sexo, List<string> _sintomas, PlanoDeSaude? _plano) : base(_nome, _dataDeNascimento, _cpf)
         {
             sexo = _sexo;
             sintomas = _sintomas;
-            planoDeSaude = _plano;
+            PlanoDeSaude = _plano!;
         }
     }
 }
