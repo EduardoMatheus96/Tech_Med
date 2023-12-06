@@ -14,7 +14,7 @@ namespace AvaliacaoGrupo.dotnetP004
             this.ValorBruto = valor;
             this.DataHora= DateTime.Now;
             this.Desconto = 0;
-            Console.WriteLine($"Pagamento de {valor} realizado com transferência bancária");
+            Console.WriteLine($"Pagamento de {valor} realizado com dinheiro");
         }    
     }
 }
