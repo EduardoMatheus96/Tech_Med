@@ -1,4 +1,4 @@
-namespace Namespace;
+namespace AvaliacaoGrupo.dotnetP004;
 public class PlanoDeSaude
 {
     string? titulo;
