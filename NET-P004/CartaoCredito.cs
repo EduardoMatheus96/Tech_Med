@@ -9,15 +9,14 @@ public class CartaoCredito : IPagamento
 
   public DateTime DataHora { get; set; }
 
-   public CartaoCredito(double _ValorBruto){
-            this.Descricao = "Pagamento com cartão de crédito";
-            this.ValorBruto = _ValorBruto;
-            this.DataHora= new DateTime();
-            this.Desconto = 0;
-        }
+  
   public void RealizarPagamento(double valor)
   {
-    Console.WriteLine($"Pagamento de {valor} realizado com cartão de crédito");
+    this.Descricao = "Pagamento com cartão de crédito";
+    this.ValorBruto = valor;
+    this.DataHora = DateTime.Now;
+    this.Desconto = 0;
 
+    Console.WriteLine($"Pagamento de {valor} realizado com cartão de crédito");
   }
 }
