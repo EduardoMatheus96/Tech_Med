@@ -2,7 +2,7 @@ namespace AvaliacaoGrupo.dotnetP004
 {
     public class Dinheiro : IPagamento
     {
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
         public double ValorBruto { get; set; }
 
         public double Desconto { get; set; }
