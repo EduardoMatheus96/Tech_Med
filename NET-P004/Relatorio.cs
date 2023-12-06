@@ -50,6 +50,9 @@ namespace AvaliacaoGrupo.dotnetP004
                         {
                             Console.WriteLine($"Nome do paciente: {paciente.Nome} - Idade: {paciente.Idade} - CPF: {paciente.Cpf}");
                             Console.WriteLine($"Sintomas:\n{string.Join(", ", paciente.Sintomas)}");
+                            paciente.Pagamentos.ForEach(
+                                pagamento => Console.WriteLine($"{pagamento.Descricao} de {paciente.PlanoDeSaude.Mensalidade}")
+                            );
                         }
                     }
                     else

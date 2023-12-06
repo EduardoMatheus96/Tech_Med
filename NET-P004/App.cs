@@ -5,6 +5,11 @@ public class App
     List<Medico> medicos = new List<Medico>();
     List<Exame> exames = new List<Exame>();
     List<Atendimento> atendimentos = new List<Atendimento>();
+    List<PlanoDeSaude> planosDeSaude = new List<PlanoDeSaude>();
+    CartaoCredito cartaoCredito = new CartaoCredito();
+    BoletoBancario boletoBancario = new BoletoBancario();
+    Dinheiro dinheiro = new Dinheiro();
+
     public void MenuPrincipal()
     {
         while (true)
@@ -14,10 +19,12 @@ public class App
             Console.WriteLine("1. Cadastrar Médico");
             Console.WriteLine("2. Cadastrar Paciente");
             Console.WriteLine("3. Cadastrar Exame");
-            Console.WriteLine("4. Iniciar atendimento");
-            Console.WriteLine("5. Encerrar atendimento");
-            Console.WriteLine("6. Relatórios");
-            Console.WriteLine("7. Sair\n");
+            Console.WriteLine("4. Cadastrar plano de saúde");
+            Console.WriteLine("5. Realizar pagamento do plano de saúde");
+            Console.WriteLine("6. Iniciar atendimento");
+            Console.WriteLine("7. Encerrar atendimento");
+            Console.WriteLine("8. Relatórios");
+            Console.WriteLine("9. Sair\n");
 
             Console.Write("Escolha uma opção: ");
             string? option = Console.ReadLine();
@@ -34,15 +41,21 @@ public class App
                     AdicionarExame();
                     break;
                 case "4":
-                    AdicionarAtendimento();
+                    AdicionarPlanoDeSaude();
                     break;
                 case "5":
-                    encerrarAtendimento();
+                    RealizarPagamentoDePlano();
                     break;
                 case "6":
-                    MenuRelatorios();
+                    AdicionarAtendimento();
                     break;
                 case "7":
+                    encerrarAtendimento();
+                    break;
+                case "8":
+                    MenuRelatorios();
+                    break;
+                case "9":
                     Environment.Exit(0);
                     break;
                 default:
@@ -87,11 +100,13 @@ public class App
             Console.WriteLine(ex.Message);
         }
     }
+
     private void AdicionarPaciente()
     {
         List<string> sintomas = new List<string>();
         try
         {
+            PlanoDeSaude? plano = null;
             Console.WriteLine($"\n===== Cadastrando um novo paciente =====\n");
             Console.Write("Nome do paciente: ");
             string? nome = Console.ReadLine() ?? throw new ArgumentNullException(nameof(nome));
@@ -106,6 +121,24 @@ public class App
                 Console.Write("Sexo: ");
                 string? sexo = Console.ReadLine() ?? throw new ArgumentNullException(nameof(sexo));
 
+                for (int i = 0; i < planosDeSaude.Count; i++)
+                {
+                    Console.WriteLine($"\n{i}. {planosDeSaude[i].Titulo}");
+                }
+
+                Console.Write("Escolha o plano de saúde: ");
+                if (int.TryParse(Console.ReadLine(), out int opcaoPlano))
+                {
+                    if (opcaoPlano <= planosDeSaude.Count)
+                    {
+                        plano = planosDeSaude[opcaoPlano];
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Plano não existe na lista");
+                    }
+                }
+
                 string? sintoma;
 
                 do
@@ -116,7 +149,7 @@ public class App
                     sintomas.Add(sintoma);
                 } while (!sintoma!.Equals("n") && !sintoma.Equals("nao"));
 
-                Paciente paciente = new Paciente(nome, date, cpf, sexo, sintomas);
+                Paciente paciente = new Paciente(nome, date, cpf, sexo, sintomas, plano);
 
                 pacientes.Add(paciente);
                 Console.WriteLine($"Paciente {paciente.Nome} adicionado com sucesso!");
@@ -132,6 +165,7 @@ public class App
             Console.WriteLine(ex.Message);
         }
     }
+
     private void AdicionarExame()
     {
         try
@@ -153,7 +187,6 @@ public class App
 
                 exames.Add(exame);
                 Console.WriteLine($"Exame {exame.Titulo} adicionado com sucesso!");
-
             }
             else
             {
@@ -165,6 +198,85 @@ public class App
             Console.WriteLine("Entrada inválida!");
         }
     }
+
+    private void AdicionarPlanoDeSaude()
+    {
+        try
+        {
+            Console.WriteLine($"\n===== Cadastrando um novo plano de saúde =====\n");
+            Console.Write("Título do plano de saúde: ");
+            string? titulo = Console.ReadLine() ?? throw new ArgumentNullException(nameof(titulo));
+
+            Console.Write("Preço do plano de saúde: ");
+            if (float.TryParse(Console.ReadLine(), out float valor))
+            {
+                PlanoDeSaude plano = new PlanoDeSaude(titulo, valor);
+                planosDeSaude.Add(plano);
+                Console.WriteLine($"Plano de saúde {plano.Titulo} adicionado com sucesso!");
+            }
+            else
+            {
+                Console.WriteLine("Por favor, insira um número decimal válido.");
+            }
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Entrada inválida!");
+        }
+    }
+
+    private void RealizarPagamentoDePlano()
+    {
+        try
+        {
+            Console.WriteLine($"\n===== Realizando pagamento de plano de saúde =====\n");
+            for (int i = 0; i < pacientes.Count; i++)
+            {
+                Console.WriteLine($"\n{i}. {pacientes[i].Nome}");
+            }
+            Console.Write("Escolha o paciente: ");
+            if (int.TryParse(Console.ReadLine(), out int opcaoPaciente))
+            {
+                if (opcaoPaciente <= pacientes.Count)
+                {
+                    Paciente paciente = pacientes[opcaoPaciente];
+
+                    Console.WriteLine("1. Cartão de crédito");
+                    Console.WriteLine("2. Boleto");
+                    Console.WriteLine("3. Dinheiro em espécie");
+                    Console.Write("Qual o método de pagamento? ");
+                    if (int.TryParse(Console.ReadLine(), out int opcaoPagamento))
+                    {
+                        if (opcaoPagamento == 1)
+                        {
+                            paciente.efetuarPagamento(cartaoCredito);
+                        }
+                        else if (opcaoPagamento == 2)
+                        {
+                            paciente.efetuarPagamento(boletoBancario);
+                        }
+                        else if (opcaoPagamento == 3)
+                        {
+                            paciente.efetuarPagamento(dinheiro);
+                        }
+                        else
+                        {
+                            Console.Write("Opção inválida!");
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Paciente não existe na lista");
+                }
+            }
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Entrada inválida!");
+        }
+    }
+
     private void AdicionarAtendimento()
     {
         if (medicos.Count == 0 || pacientes.Count == 0 || exames.Count == 0)
