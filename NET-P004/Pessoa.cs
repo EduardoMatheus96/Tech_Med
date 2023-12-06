@@ -1,4 +1,5 @@
-
+namespace AvaliacaoGrupo.dotnetP004
+{
     public class Pessoa
     {
         private static HashSet<string> cpfsUnicos = new HashSet<string>();
@@ -10,18 +11,15 @@
             Nome = _nome;
             dataDeNascimento = _dataDeNascimento;
 
-           
-
             if (cpfsUnicos.Add(_cpf))
-            {                       
+            {
                 if (ValidateCpf(_cpf))
                 {
                     Cpf = _cpf;
                 }
                 else
                 {
-                    throw new ArgumentException("O CPF deve conter exatamente 11 dígitos numéricos.");
-
+                    throw new ArgumentException("O CPF deve conter exatamente 11 dígitos numéricos.");  
                 }
             }
             else
@@ -49,3 +47,4 @@
             return true;
         }
     }
+}
