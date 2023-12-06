@@ -1,3 +1,4 @@
+namespace NET_P004;
 public class BoletoBancario: IPagamento{
     public void RealizarPagamento(double valor){
       Console.WriteLine($"Pagamento de {valor} pagamento concluído com sucesso");
