@@ -8,11 +8,11 @@ public class BoletoBancario : IPagamento
 
     public DateTime DataHora { get; set; }
 
-    public BoletoBancario(double _ValorBruto)
+    public BoletoBancario(double valor)
     {
         this.Descricao = "Pagamento em boleto bancário";
-        this.ValorBruto = _ValorBruto;
-        this.DataHora = new DateTime();
+        this.ValorBruto = valor;
+        this.DataHora = DateTime.Now();
         this.Desconto = 0;
     }
 
