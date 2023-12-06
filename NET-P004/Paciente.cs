@@ -5,6 +5,10 @@ namespace AvaliacaoGrupo.dotnetP004
         string sexo;
         List<string> sintomas;
 
+        PlanoDeSaude planoDeSaude;
+
+        List<Pagamento> pagamentos = new List<Pagamento>;
+
         public string Sexo
         {
             get { return sexo; }
@@ -25,6 +29,24 @@ namespace AvaliacaoGrupo.dotnetP004
         {
             get { return sintomas; }
             set { this.sintomas = value; }
+        }
+
+        public PlanoDeSaude PlanoDeSaude
+        {
+            get { return planoDeSaude; }
+            set { this.planoDeSaude = value; }
+        }
+
+        public List<Pagamento> Pagamentos
+        {
+            get { return pagamentos; }
+            set
+            {
+                foreach (Pagamento pagamento in value)
+                {
+                    this.pagamentos.Add(pagamento);
+                }
+            }
         }
 
         public Paciente(string _nome, DateTime _dataDeNascimento, string _cpf, string _sexo, List<string> _sintomas) : base(_nome, _dataDeNascimento, _cpf)
